@@ -23,6 +23,13 @@ module.exports = function(app, passport) {
         });
     });
 
+    app.get('/canvas', function(req, res) {
+
+        res.render('canvas', {
+            loggedIn: req.isAuthenticated()
+        });
+    });
+
     app.post('/login', passport.authenticate('local-login', {
         successRedirect : '/',
         failureRedirect : '/login',

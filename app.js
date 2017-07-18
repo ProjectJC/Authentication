@@ -55,7 +55,48 @@ app.use(function(err, req, res, next) {
 });
 
 module.exports = app;
+//
+// app.listen(3000, function () {
+//     console.log('Example app listening on port 3000!')
+// });
 
-app.listen(3000, function () {
-    console.log('Example app listening on port 3000!')
+
+
+var server = require('http').createServer(app);
+var io = require('socket.io').listen(server);
+server.listen(3000);
+connections = [];
+
+io.sockets.on('connection', function(socket) {
+    connections.push(socket);
+    console.log('%s sockets connected.', connections.length);
+
+    socket.on('mouseDown', function(data){
+        io.sockets.emit('mouseDown', data)
+    });
+
+
+    socket.on('clear', function(data) {
+        io.sockets.emit('clear')
+    });
+
+
+    socket.on('mouseMove', function(data){
+        io.sockets.emit('mouseMove', data)
+    });
+
+
+    socket.on('mouseUp', function(){
+        io.sockets.emit('mouseUp')
+    });
+
+    socket.on('mouseLeave', function(){
+        io.sockets.emit('mouseLeave')
+    });
+
+
+    socket.on('disconnect', function (data) {
+        connections.splice(connections.indexOf(socket), 1);
+        console.log('1 socket disconnected. %s left.', connections.length);
+    })
 });
