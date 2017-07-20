@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+
+<html>
+<link rel="stylesheet" href="../public/stylesheets/canvas.css" />
+<link rel="shortcut icon" href="../public/images/favicon.ico" type="image/x-icon" /> 
+<body> 
+
+<div id="game">
+
+	<div id="table"> 
+		<div id="players"> 
+			<svg id="playersPanel" width="100%" height="100%">
+			</svg>
+		</div>
+
+		<div id = 'game-chat'> 
+			<div id='chat-window'>
+				<div id='output'></div>
+			</div>
+			<input id = "message" type="text" placeholder="Your guess">
+			<button id="send">Send</button>
+		</div>
+	</div>
+
+	<div id="canvasgroup"> 
+		<canvas id="canvas" width="800" height="500"></canvas>
+		<div> 
+			<button id="button">Clear</button>
+		</div>
+	</div>
+</div>
+
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.0.3/socket.io.js"></script>
+<script src="../public/Scripts/Player.js"></script>
+<script src="../public/Scripts/Table.js"></script>
+<script src="../public/Scripts/chat-class.js"></script>
+<script src="../public/Scripts/Canvas-class.js"></script>
+<!-- <script src="Scripts/chat-script.js"></script> -->
+<script src="../public/Scripts/Game.js"></script>
+<script src="../public/Scripts/Main.js"></script>
+
+<!-- <script src="Scripts/canvas.js"></script> -->
+</body>
+</html>

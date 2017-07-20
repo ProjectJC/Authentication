@@ -95,8 +95,13 @@ io.sockets.on('connection', function(socket) {
     });
 
 
+    socket.on('player-message', function(data){
+      console.log('message sent');
+      io.sockets.emit('player-message', data);
+    });
+
     socket.on('disconnect', function (data) {
         connections.splice(connections.indexOf(socket), 1);
         console.log('1 socket disconnected. %s left.', connections.length);
-    })
+    });
 });
