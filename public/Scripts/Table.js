@@ -14,6 +14,9 @@ class Table {
 			player.drawPlayer();
 			self.players.push(player);
 		});
+		this.player_chat.displayMessage({id:3, message: "test2"});
+				this.player_chat.displayMessage({id:4, message: "test1"});
+
 	};
 
 

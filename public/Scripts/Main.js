@@ -29,7 +29,7 @@ document.getElementById("canvas").addEventListener("mousedown", mouseDown);
 document.getElementById("canvas").addEventListener("mousemove", mouseMove);
 document.getElementById("canvas").addEventListener("mouseup", mouseUp);
 document.getElementById("canvas").addEventListener("mouseleave", mouseLeave);
-document.getElementById("button").addEventListener("click", buttonClicked); //?????????????????????
+document.getElementById("clear").addEventListener("click", buttonClicked); //?????????????????????
 
 
 function mouseDown(e) {

@@ -13,7 +13,7 @@ document.getElementById("canvas").addEventListener("mousedown", mouseDown);
 document.getElementById("canvas").addEventListener("mousemove", mouseMove);
 document.getElementById("canvas").addEventListener("mouseup", mouseUp);
 document.getElementById("canvas").addEventListener("mouseleave", mouseLeave);
-document.getElementById("button").addEventListener("click", buttonClicked);
+document.getElementById("clear").addEventListener("click", buttonClicked);
 
 
 function mouseDown(e) {
@@ -36,19 +36,18 @@ socket.on('mouseDown', function(data) {
 
 });
 
-
-
 //------Mouse move
 function mouseMove(e) {
-    console.log('MOUSE MOVE');
     socket.emit('mouseMove', {
-        x: e.pageX- this.offsetLeft,
+        x: e.pageX - this.offsetLeft,
         y: e.pageY - this.offsetTop
     });
 }
 
 
 socket.on('mouseMove', function(data){
+    console.log('MOUSE MOVE');
+
     if(paint){
         addClick(data.x, data.y, true);
         redraw();
@@ -63,7 +62,7 @@ function mouseUp(e) {
 }
 
 socket.on('mouseUp', function(){
-    paint=false;
+    paint = false;
 });
 
 //---------Mouse leave
@@ -74,7 +73,6 @@ function mouseLeave(e) {
 socket.on('mouseLeave', function(){
     paint=false;
 });
-
 
 function buttonClicked(e) {
     socket.emit('clear');
