@@ -6,6 +6,6 @@ class Game {
 
     seatPlayers() {
         //todo:
-        this.table.seatPlayers([{id: 3, name: "ana"}, {id:4, name:"mary"}, {id:5, name:"mary"},  {id:6, name:"mary"}, ]);
+        this.table.seatPlayers([{id: 3, name: "ana"}, {id:4, name:"mary"}, {id:5, name:"giorgi"},  {id:6, name:"giorgi"}, ]);
     }
 }

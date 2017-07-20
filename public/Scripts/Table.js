@@ -11,7 +11,7 @@ class Table {
 		self.players = [];
 		players.forEach(function(playerDto, i) {
 			var player = new Player(playerDto);
-			player.drawPlayer((i+1) * 100, 0);
+			player.drawPlayer();
 			self.players.push(player);
 		});
 	};

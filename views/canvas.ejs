@@ -2,28 +2,27 @@
 
 <html>
 <link rel="stylesheet" href="../stylesheets/canvas.css" />
+<link rel="stylesheet" href="../stylesheets/player.css" />
 <link rel="shortcut icon" href="../images/favicon.ico" type="image/x-icon" />
 <body>
 
 <div id="game">
-
-    <div id="table">
-        <div id="players">
-            <svg id="playersPanel" width="100%" height="100%">
-            </svg>
+    <div id="canvasgroup">
+        <canvas id="canvas"></canvas>
+        <div>
+            <button id="button">Clear</button>
         </div>
     </div>
 
-    <div id="canvasgroup">
-        <canvas id="canvas" width="800" height="500"></canvas>
-        <div>
-            <button id="button">Clear</button>
+    <div id="table">
+        <div id="players">
         </div>
     </div>
 </div>
 
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.0.3/socket.io.js"></script>
+<script src="../Scripts/Chat.js"></script>
 <script src="../Scripts/Player.js"></script>
 <script src="../Scripts/Table.js"></script>
 <script src="../Scripts/Game.js"></script>
