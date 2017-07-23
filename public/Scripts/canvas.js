@@ -7,6 +7,10 @@ var clickY = [];
 var clickDrag = [];
 var paint;
 var game = new Game();
+var initialCanvasHeight = 566;
+var initialCanvasWidth = 843;
+var drawingRatioX = document.getElementById("canvas").scrollWidth/initialCanvasWidth;
+var drawingRatioY = document.getElementById("canvas").scrollHeight/initialCanvasHeight;
 
 game.displayChat();
 game.seatPlayers();
@@ -22,20 +26,24 @@ document.getElementById("canvas").addEventListener("mouseleave", mouseLeave);
 document.getElementById("clear").addEventListener("click", buttonClicked);
 
 
+window.onresize = function () {
+    drawingRatioX = document.getElementById("canvas").scrollWidth/initialCanvasWidth;
+    drawingRatioY = document.getElementById("canvas").scrollHeight/initialCanvasHeight;
+    console.log(drawingRatioX, drawingRatioY);
+}
+
+
 
 /*
  * თუ Chat და Canvas ობიექტებთან მხოლოდ Game-ს მეშვეობით უნდა გვქონდეს წვდომა, მაშინ ასე უნდა დავწეროთ ალბათ?
  * */
 send_button.addEventListener('click', function(){
     var message = document.getElementById("message_input");
-    // console.log(message.value);
     game.emitMessage(socket, message);
-    // chat.emitMessage(socket, message);
 });
 
 socket.on('player-message', function(data){
     game.displayMessage(data);
-    // chat.displayMessage(data);
 });
 
 
@@ -43,6 +51,7 @@ socket.on('player-message', function(data){
 function mouseDown(e) {
     var mouseX = e.pageX - this.offsetLeft;
     var mouseY = e.pageY - this.offsetTop;
+    // console.log("x: ", mouseX, "y: ", mouseY);
     socket.emit('mouseDown', {
         x:mouseX,
         y:mouseY
@@ -126,11 +135,12 @@ function redraw(){
     for(var i=0; i < clickX.length; i++) {
         context.beginPath();
         if(clickDrag[i] && i){
-            context.moveTo(clickX[i-1], clickY[i-1]);
+            // console.log("clickX: ", clickX[i], "; clickY: ", clickY[i]);
+            context.moveTo(clickX[i-1]/drawingRatioX, clickY[i-1]/drawingRatioY);
         }else{
-            context.moveTo(clickX[i]-1, clickY[i]);
+            context.moveTo((clickX[i]-1)/drawingRatioX, clickY[i]/drawingRatioY);
         }
-        context.lineTo(clickX[i], clickY[i]);
+        context.lineTo(clickX[i]/drawingRatioX, clickY[i]/drawingRatioY);
         context.closePath();
         context.stroke();
     }
