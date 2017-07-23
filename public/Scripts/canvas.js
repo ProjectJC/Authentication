@@ -1,5 +1,6 @@
 
-context = document.getElementById('canvas').getContext("2d");
+canvas = document.getElementById('canvas');
+context = canvas.getContext("2d");
 var socket = io.connect("http://localhost:3000");
 
 var clickX = [];
@@ -41,8 +42,11 @@ socket.on('player-message', function(data){
 
 
 function mouseDown(e) {
-    var mouseX = e.pageX - this.offsetLeft;
-    var mouseY = e.pageY - this.offsetTop;
+    const rect = canvas.getBoundingClientRect();
+    const scaleX = canvas.width / rect.width;
+    const scaleY = canvas.height / rect.height;
+    var mouseX = (e.pageX - rect.left)*scaleX;
+    var mouseY = (e.pageY - rect.top)*scaleY;
     socket.emit('mouseDown', {
         x:mouseX,
         y:mouseY
@@ -53,18 +57,22 @@ socket.on('mouseDown', function(data) {
     console.log('down');
     var mouseX = data.x;
     var mouseY = data.y;
-
     paint = true;
     addClick(mouseX, mouseY);
     redraw();
-
 });
 
 //------Mouse move
 function mouseMove(e) {
+    const rect = canvas.getBoundingClientRect();
+    const scaleX = canvas.width / rect.width;
+    const scaleY = canvas.height / rect.height;
+    var mouseX = (e.pageX - rect.left)*scaleX;
+    var mouseY = (e.pageY - rect.top)*scaleY;
+
     socket.emit('mouseMove', {
-        x: e.pageX - this.offsetLeft,
-        y: e.pageY - this.offsetTop
+        x: mouseX,
+        y: mouseY
     });
 }
 
