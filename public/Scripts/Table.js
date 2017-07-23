@@ -3,6 +3,7 @@ class Table {
 	constructor() {
 		console.log("table");
 		this.player_chat = new Chat();
+        this.canvas = new Canvas();
 	}
 
 
@@ -23,6 +24,10 @@ class Table {
 	displayChat() {
 		this.player_chat.drawChat();
 	}
+
+	displayCanvas(){
+	    this.canvas.drawCanvas();
+    }
 
 
 	emitMessage(socket, message) {
