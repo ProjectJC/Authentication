@@ -1,6 +1,8 @@
 
 canvas = document.getElementById('canvas');
 context = canvas.getContext("2d");
+var lastI = -1;
+var checkpoints = [];
 var socket = io.connect("http://localhost:3000");
 
 var clickX = [];
@@ -20,7 +22,8 @@ document.getElementById("canvas").addEventListener("mousedown", mouseDown);
 document.getElementById("canvas").addEventListener("mousemove", mouseMove);
 document.getElementById("canvas").addEventListener("mouseup", mouseUp);
 document.getElementById("canvas").addEventListener("mouseleave", mouseLeave);
-document.getElementById("clear").addEventListener("click", buttonClicked);
+document.getElementById("clear").addEventListener("click", clearClicked);
+document.getElementById("undo").addEventListener("click", undoClicked);
 
 
 /*
@@ -55,6 +58,8 @@ socket.on('mouseDown', function(data) {
     var mouseX = data.x;
     var mouseY = data.y;
     paint = true;
+    checkpoints.push(lastI);
+    console.log(lastI);
     addClick(mouseX, mouseY);
     redraw();
 });
@@ -103,8 +108,12 @@ socket.on('mouseLeave', function(){
     paint=false;
 });
 
-function buttonClicked(e) {
+function clearClicked(e) {
     socket.emit('clear');
+}
+
+function undoClicked(e) {
+    socket.emit('undo');
 }
 
 socket.on('clear', function(){
@@ -115,12 +124,36 @@ socket.on('clear', function(){
     clickDrag = [];
 });
 
+socket.on('undo', function(){
+    console.log('UNDO');
+    context.clearRect(0, 0, context.canvas.width, context.canvas.height); // Clears the canvas
+    if(checkpoints.length === 0 ){
+        return;
+    }
+    lastI = checkpoints[checkpoints.length-1];
+
+    console.log(clickX.length);
+    console.log(lastI);
+    clickX = clickX.slice(0,lastI+1);
+    console.log(clickX.length);
+    clickY = clickY.slice(0,lastI+1);
+    clickDrag = clickDrag.slice(0,lastI+1);
+
+    checkpoints = checkpoints.slice(0,checkpoints.length-1);
+    if(clickX.length!== 0){
+        redraw();
+    }
+
+});
+
 
 function addClick(x, y, dragging) {
     clickX.push(x);
     clickY.push(y);
     clickDrag.push(dragging);
 }
+
+
 
 function redraw(){
     //context.clearRect(0, 0, context.canvas.width, context.canvas.height); // Clears the canvas
@@ -140,4 +173,7 @@ function redraw(){
         context.closePath();
         context.stroke();
     }
+
+    lastI = clickX.length -1;
+
 }

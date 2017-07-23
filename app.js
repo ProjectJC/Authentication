@@ -76,6 +76,11 @@ io.sockets.on('connection', function(socket) {
         io.sockets.emit('clear')
     });
 
+    socket.on('undo',function(data){
+        console.log("hello");
+        io.sockets.emit('undo');
+    });
+
 
     socket.on('mouseMove', function(data){
         io.sockets.emit('mouseMove', data)
@@ -89,6 +94,8 @@ io.sockets.on('connection', function(socket) {
     socket.on('mouseLeave', function(){
         io.sockets.emit('mouseLeave')
     });
+
+
 
 
     socket.on("player-message", function(data){
