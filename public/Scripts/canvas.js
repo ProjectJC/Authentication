@@ -1,5 +1,6 @@
 
-context = document.getElementById('canvas').getContext("2d");
+canvas = document.getElementById('canvas');
+context = canvas.getContext("2d");
 var socket = io.connect("http://localhost:3000");
 
 var clickX = [];
@@ -7,10 +8,6 @@ var clickY = [];
 var clickDrag = [];
 var paint;
 var game = new Game();
-var initialCanvasHeight = 566;
-var initialCanvasWidth = 843;
-var drawingRatioX = document.getElementById("canvas").scrollWidth/initialCanvasWidth;
-var drawingRatioY = document.getElementById("canvas").scrollHeight/initialCanvasHeight;
 
 game.displayChat();
 game.seatPlayers();
@@ -24,14 +21,6 @@ document.getElementById("canvas").addEventListener("mousemove", mouseMove);
 document.getElementById("canvas").addEventListener("mouseup", mouseUp);
 document.getElementById("canvas").addEventListener("mouseleave", mouseLeave);
 document.getElementById("clear").addEventListener("click", buttonClicked);
-
-
-window.onresize = function () {
-    drawingRatioX = document.getElementById("canvas").scrollWidth/initialCanvasWidth;
-    drawingRatioY = document.getElementById("canvas").scrollHeight/initialCanvasHeight;
-    console.log(drawingRatioX, drawingRatioY);
-}
-
 
 
 /*
@@ -49,9 +38,12 @@ socket.on('player-message', function(data){
 
 
 function mouseDown(e) {
-    var mouseX = e.pageX - this.offsetLeft;
-    var mouseY = e.pageY - this.offsetTop;
-    // console.log("x: ", mouseX, "y: ", mouseY);
+
+    const rect = canvas.getBoundingClientRect();
+    const scaleX = canvas.width / rect.width;
+    const scaleY = canvas.height / rect.height;
+    var mouseX = (e.pageX - rect.left)*scaleX;
+    var mouseY = (e.pageY - rect.top)*scaleY;
     socket.emit('mouseDown', {
         x:mouseX,
         y:mouseY
@@ -62,18 +54,22 @@ socket.on('mouseDown', function(data) {
     console.log('down');
     var mouseX = data.x;
     var mouseY = data.y;
-
     paint = true;
     addClick(mouseX, mouseY);
     redraw();
-
 });
 
 //------Mouse move
 function mouseMove(e) {
+    const rect = canvas.getBoundingClientRect();
+    const scaleX = canvas.width / rect.width;
+    const scaleY = canvas.height / rect.height;
+    var mouseX = (e.pageX - rect.left)*scaleX;
+    var mouseY = (e.pageY - rect.top)*scaleY;
+
     socket.emit('mouseMove', {
-        x: e.pageX - this.offsetLeft,
-        y: e.pageY - this.offsetTop
+        x: mouseX,
+        y: mouseY
     });
 }
 
@@ -136,11 +132,11 @@ function redraw(){
         context.beginPath();
         if(clickDrag[i] && i){
             // console.log("clickX: ", clickX[i], "; clickY: ", clickY[i]);
-            context.moveTo(clickX[i-1]/drawingRatioX, clickY[i-1]/drawingRatioY);
+            context.moveTo(clickX[i-1], clickY[i-1]);
         }else{
-            context.moveTo((clickX[i]-1)/drawingRatioX, clickY[i]/drawingRatioY);
+            context.moveTo((clickX[i]-1), clickY[i]);
         }
-        context.lineTo(clickX[i]/drawingRatioX, clickY[i]/drawingRatioY);
+        context.lineTo(clickX[i], clickY[i]);
         context.closePath();
         context.stroke();
     }
