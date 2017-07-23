@@ -15,12 +15,27 @@ class Table {
 			self.players.push(player);
 		});
 		this.player_chat.displayMessage({id:3, message: "test2"});
-				this.player_chat.displayMessage({id:4, message: "test1"});
+		this.player_chat.displayMessage({id:4, message: "test1"});
 
 	};
 
 
+	displayChat() {
+		this.player_chat.drawChat();
+	}
+
+
+	emitMessage(socket, message) {
+		var self = this;
+		self.player_chat.emitMessage(socket, message);
+	}
+
+	displayMessage(data) {
+        var self = this;
+		self.player_chat.displayMessage(data);
+	}
+
 	getChat(){
-		return self.chat;
+		return this.chat;
 	}
 }

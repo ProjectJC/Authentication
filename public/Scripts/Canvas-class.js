@@ -9,6 +9,18 @@ class Canvas {
 
 	}
 
+	drawCanvas() {
+		var canvas_group = document.getElementById("canvasgroup");
+		var canvas = document.createElement("canvas");
+		canvas.setAttribute("id", "canvas");
+		var clear_button = document.createElement("button");
+		clear_button.setAttribute("id", "clear");
+		clear_button.innerHTML = "Clear";
+
+		canvas_group.appendChild(canvas);
+		canvas_group.appendChild(clear_button);
+	}
+
 
 	mouseDown(socket, e) {
 	  var mouseX = e.pageX - this.offsetLeft;

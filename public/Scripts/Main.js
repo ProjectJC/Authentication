@@ -6,21 +6,25 @@ var clickY = [];
 var clickDrag = [];
 var paint;
 var game = new Game();
+game.displayChat();
 game.seatPlayers();
 
 
-var chat = new Chat();
-var message = chat.getMessage();
-var button = chat.getButton();  //?????????????????
-var output = chat.getOutput();
+var message = document.getElementById("message");//chat.getMessage();
+var button = document.getElementById("send");  //?????????????????
+var output = document.getElementById("output");
 
-
+/*
+ * თუ Chat და Canvas ობიექტებთან მხოლოდ Game-ს მეშვეობით უნდა გვქონდეს წვდომა, მაშინ ასე უნდა დავწეროთ ალბათ?
+ * */
 button.addEventListener('click', function(){
-  chat.emitMessage(socket, message);
+    game.emitMessage(socket, message);
+  // chat.emitMessage(socket, message);
 });
 
 socket.on('player-message', function(data){
-  chat.displayMessage(data);
+    game.displayMessage(data);
+  // chat.displayMessage(data);
 });
 
 

@@ -1,19 +1,43 @@
 
 context = document.getElementById('canvas').getContext("2d");
-var socket = io.connect("http://localhost:3000/canvas")
+var socket = io.connect("http://localhost:3000");
 
 var clickX = [];
 var clickY = [];
 var clickDrag = [];
 var paint;
 var game = new Game();
+
+game.displayChat();
 game.seatPlayers();
+
+// var message = document.getElementById("message");//chat.getMessage();
+var send_button = document.getElementById("send");  //?????????????????
+// var output = document.getElementById("output");
 
 document.getElementById("canvas").addEventListener("mousedown", mouseDown);
 document.getElementById("canvas").addEventListener("mousemove", mouseMove);
 document.getElementById("canvas").addEventListener("mouseup", mouseUp);
 document.getElementById("canvas").addEventListener("mouseleave", mouseLeave);
 document.getElementById("clear").addEventListener("click", buttonClicked);
+
+
+
+/*
+ * თუ Chat და Canvas ობიექტებთან მხოლოდ Game-ს მეშვეობით უნდა გვქონდეს წვდომა, მაშინ ასე უნდა დავწეროთ ალბათ?
+ * */
+send_button.addEventListener('click', function(){
+    var message = document.getElementById("message_input");
+    // console.log(message.value);
+    game.emitMessage(socket, message);
+    // chat.emitMessage(socket, message);
+});
+
+socket.on('player-message', function(data){
+    game.displayMessage(data);
+    // chat.displayMessage(data);
+});
+
 
 
 function mouseDown(e) {

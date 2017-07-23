@@ -7,38 +7,26 @@
 <link rel="stylesheet" href="../stylesheets/player.css" />
 <link rel="shortcut icon" href="../images/favicon.ico" type="image/x-icon" />
 <body>
-
-<div id="game">
-    <div id="canvasgroup">
-        <canvas id="canvas"></canvas>
-        <div>
-            <button id="clear">Clear</button>
-        </div>
-    </div>
-
-    <div id="table">
-        <div id="players">
-        </div>
-
-        <div id = 'game-chat'> 
-            <div id='chat-window'>
-                <div id='output'></div>
+    <div id="game">
+        <div id="canvasgroup">
+            <canvas id="canvas"></canvas>
+            <div>
+                <button id="clear">Clear</button>
             </div>
-            <input id = "message" type="text" placeholder="Your guess">
-            <button id="send">Send</button>
         </div>
 
+        <div id="table">
+            <div id="players"></div>
+            <div id = 'game-chat'></div>
+        </div>
     </div>
-</div>
 
-
-<script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.0.3/socket.io.js"></script>
-<script src="../Scripts/Chat.js"></script>
-<script src="../Scripts/Player.js"></script>
-<script src="../Scripts/Table.js"></script>
-<script src="../Scripts/Game.js"></script>
-<script src="../Scripts/canvas.js"></script>
-<!-- <script src="../Scripts/Main.js"></script>
- -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.0.3/socket.io.js"></script>
+    <script src="../Scripts/Chat.js"></script>
+    <script src="../Scripts/Player.js"></script>
+    <script src="../Scripts/Table.js"></script>
+    <script src="../Scripts/Game.js"></script>
+    <script src="../Scripts/Canvas-class.js"></script>
+    <script src="../Scripts/canvas.js"></script>
 </body>
 </html>

@@ -33,8 +33,8 @@ app.use(flash());
 
 require('./routes/routes.js')(app, passport);
 
+app.use(express.static(path.join(__dirname, 'public')));
 
-app.use(express.static(__dirname + '/public'));
 app.use(function(req, res, next) {
   var err = new Error('Not Found');
   err.status = 404;
@@ -70,13 +70,14 @@ connections = [];
 io.sockets.on('connection', function(socket) {
     connections.push(socket);
     console.log('%s sockets connected.', connections.length);
-
+    console.log(socket.id);
     socket.on('mouseDown', function(data){
         io.sockets.emit('mouseDown', data)
     });
 
 
     socket.on('clear', function(data) {
+        console.log("clear");
         io.sockets.emit('clear')
     });
 
@@ -95,7 +96,7 @@ io.sockets.on('connection', function(socket) {
     });
 
 
-    socket.on('player-message', function(data){
+    socket.on("player-message", function(data){
       console.log('message sent');
       io.sockets.emit('player-message', data);
     });
