@@ -1,7 +1,6 @@
 class Game {
     constructor() {
         this.table = new Table();
-
     }
 
     seatPlayers() {

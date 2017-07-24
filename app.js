@@ -66,33 +66,38 @@ io.sockets.on('connection', function(socket) {
     connections.push(socket);
     console.log('%s sockets connected.', connections.length);
     console.log(socket.id);
+
+    socket.on('addUser',function(data){
+       socket.room = ""+data;
+       socket.join("" + data);
+    });
     socket.on('mouseDown', function(data){
-        io.sockets.emit('mouseDown', data)
+        io.sockets.in(socket.room).emit('mouseDown', data)
     });
 
 
     socket.on('clear', function(data) {
         console.log("clear");
-        io.sockets.emit('clear')
+        io.sockets.in(socket.room).emit('clear')
     });
 
     socket.on('undo',function(data){
         console.log("hello");
-        io.sockets.emit('undo');
+        io.sockets.in(socket.room).emit('undo');
     });
 
 
     socket.on('mouseMove', function(data){
-        io.sockets.emit('mouseMove', data)
+        io.sockets.in(socket.room).emit('mouseMove', data)
     });
 
 
     socket.on('mouseUp', function(){
-        io.sockets.emit('mouseUp')
+        io.sockets.in(socket.room).emit('mouseUp')
     });
 
     socket.on('mouseLeave', function(){
-        io.sockets.emit('mouseLeave')
+        io.sockets.in(socket.room).emit('mouseLeave')
     });
 
 
@@ -100,11 +105,12 @@ io.sockets.on('connection', function(socket) {
 
     socket.on("player-message", function(data){
       console.log('message sent');
-      io.sockets.emit('player-message', data);
+      io.sockets.in(socket.room).emit('player-message', data);
     });
 
     socket.on('disconnect', function (data) {
         connections.splice(connections.indexOf(socket), 1);
         console.log('1 socket disconnected. %s left.', connections.length);
+        socket.leave(socket.room);
     });
 });
