@@ -6,7 +6,7 @@
 }
 
 body {
-    background: #2c3338;
+    background: #FFB74D;
     color: #606468;
     font: 87.5%/1.5em 'Open Sans', sans-serif;
     margin: 0;
@@ -37,13 +37,13 @@ after { clear: both; }
     padding: 22px 22px 22px 22px;
     width: 100%;
     border-radius: 5px;
-    background: #282e33;
-    border-top: 3px solid #434a52;
-    border-bottom: 3px solid #434a52;
+    background: #FB8C00;
+    border-top: 3px solid #FFCC80;
+    border-bottom: 3px solid #FFCC80;
 }
 
 #login form span {
-    background-color: #363b41;
+    background-color: #FFB74D;
     border-radius: 3px 0px 0px 3px;
     border-right: 3px solid #434a52;
     color: #606468;
@@ -56,7 +56,7 @@ after { clear: both; }
 }
 
 #login form input[type="text"] {
-    background-color: #3b4148;
+    background-color: #FFCC80;
     border-radius: 0px 3px 3px 0px;
     color: #a9a9a9;
     margin-bottom: 1em;
@@ -66,7 +66,7 @@ after { clear: both; }
 }
 
 #login form input[type="password"] {
-    background-color: #3b4148;
+    background-color: #FFCC80;
     border-radius: 0px 3px 3px 0px;
     color: #a9a9a9;
     margin-bottom: 1em;
@@ -76,7 +76,7 @@ after { clear: both; }
 }
 
 #login form input[type="submit"] {
-    background: #b5cd60;
+    background: #E65100;
     border: 0;
     width: 100%;
     height: 40px;
@@ -86,5 +86,5 @@ after { clear: both; }
     transition: background 0.3s ease-in-out;
 }
 #login form input[type="submit"]:hover {
-    background: #16aa56;
+    background: #EF6C00;
 }

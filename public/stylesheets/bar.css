@@ -1,6 +1,11 @@
 /* Add a black background color to the top navigation */
+body {
+    background-color: #FFCC80;
+}
+
+
 .topnav {
-    background-color: #333;
+    background-color: #FF9800;
     overflow: hidden;
 }
 
@@ -15,7 +20,7 @@
 }
 
 .topnav a:hover {
-    background-color: #ddd;
+    background-color: #FFCC80;
     color: black;
 }
 
