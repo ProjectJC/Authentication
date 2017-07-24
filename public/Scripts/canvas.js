@@ -57,13 +57,13 @@ document.getElementById("slide-bar").addEventListener("change", function(){
     console.log(currentSize);
 });
 
-document.getElementById("crayon").addEventListener("click", function() {
+document.getElementById("tool-crayon").addEventListener("click", function() {
    currentTool = "crayon";
 });
-document.getElementById("pen").addEventListener("click", function() {
+document.getElementById("tool-pen").addEventListener("click", function() {
     currentTool = "pen";
 });
-document.getElementById("eraser").addEventListener("click", function() {
+document.getElementById("tool-eraser").addEventListener("click", function() {
     currentTool = "eraser";
 });
 document.getElementById("canvas").addEventListener("mousedown", mouseDown);

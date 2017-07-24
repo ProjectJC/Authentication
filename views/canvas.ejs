@@ -7,56 +7,50 @@
 <link rel="stylesheet" href="../stylesheets/player.css" />
 <link rel="shortcut icon" href="../images/favicon.ico" type="image/x-icon" />
 <body>
-    <div id="game">
-        <div id="canvasgroup">
+<div id="game">
+    <div id="canvasgroup">
 
-            <canvas id="canvas" width='1200' height='600' ></canvas>
-            <div id="settings">
-                <div id = "slide-bar-group">
-                    <input id="slide-bar" type="range" min="3" max="24" value="3" step="3" onchange="showValue(this.value)" />
-                    <span id="range">3</span>
-                    <script type="text/javascript">
-                        function showValue(newValue){
-                            document.getElementById("range").innerHTML=newValue;
-                        }
-                    </script>
-                </div>
-                <button id="clear">Clear</button>
-                <button id="undo">Undo</button>
-                <div class="dropdown">
-                    <button class="dropbtn">Colors</button>
-                    <div class="dropdown-content">
-                        <button id="color1" >Purple</button>
-                        <button id="color2" >Green</button>
-                        <button id="color3" >Yellow</button>
-                        <button id="color4" >Brown</button>
-                    </div>
-                </div>
+        <canvas id="canvas" width='1200' height='600' ></canvas>
+        <div id="settings">
 
-                <div class="dropdown-tools">
-                    <button class="dropbtn-tools">Tools</button>
-                    <div class="dropdown-tools-content">
-                        <button id="crayon">Crayon</button>
-                        <button id="pen">Pen</button>
-                        <button id="eraser">Eraser</button>
-                    </div>
-                </div>
+            <button id="clear">Clear</button>
+            <button id="undo">Undo</button>
+            <div id="color-buttons">
+                <button id="color1" >Purple</button>
+                <button id="color2" >Green</button>
+                <button id="color3" >Yellow</button>
+                <button id="color4" >Brown</button>
+            </div>
 
+            <div id="tool-buttons">
+                <button id="tool-crayon">Crayon</button>
+                <button id="tool-pen">Pen</button>
+                <button id="tool-eraser">Eraser</button>
+            </div>
 
+            <div id = "slide-bar-group">
+                <input id="slide-bar" type="range" min="3" max="24" value="3" step="3" onchange="showValue(this.value)" />
+                <span id="range">3</span>
+                <script type="text/javascript">
+                    function showValue(newValue){
+                        document.getElementById("range").innerHTML=newValue;
+                    }
+                </script>
             </div>
         </div>
-        <div id="table">
-            <div id="players"></div>
-            <div id = 'game-chat'></div>
-        </div>
     </div>
+    <div id="table">
+        <div id="players"></div>
+        <div id = 'game-chat'></div>
+    </div>
+</div>
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.0.3/socket.io.js"></script>
-    <script src="../Scripts/Chat.js"></script>
-    <script src="../Scripts/Player.js"></script>
-    <script src="../Scripts/Table.js"></script>
-    <script src="../Scripts/Game.js"></script>
-    <script src="../Scripts/Canvas-class.js"></script>
-    <script src="../Scripts/canvas.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.0.3/socket.io.js"></script>
+<script src="../Scripts/Chat.js"></script>
+<script src="../Scripts/Player.js"></script>
+<script src="../Scripts/Table.js"></script>
+<script src="../Scripts/Game.js"></script>
+<script src="../Scripts/Canvas-class.js"></script>
+<script src="../Scripts/canvas.js"></script>
 </body>
 </html>
