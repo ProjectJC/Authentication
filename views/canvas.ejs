@@ -6,9 +6,14 @@
 <link rel="stylesheet" href="../stylesheets/chat.css" />
 <link rel="stylesheet" href="../stylesheets/player.css" />
 <link rel="shortcut icon" href="../images/favicon.ico" type="image/x-icon" />
+
+<% const roomname1 = (room) %>
+
 <body>
     <div id="game">
         <div id="canvasgroup">
+            <input type="hidden" name="hiddenTemp1" id="hiddenTemp1" value="<%=roomname1%>">
+            <script> const roomname = document.getElementById("hiddenTemp1").value</script>
 
             <canvas id="canvas" width='1200' height='600' ></canvas>
             <div id="settings">

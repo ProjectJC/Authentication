@@ -26,7 +26,32 @@ module.exports = function(app, passport) {
     app.get('/canvas', function(req, res) {
 
         res.render('canvas', {
-            loggedIn: req.isAuthenticated()
+            loggedIn: req.isAuthenticated(),
+            room: 1
+        });
+    });
+
+    app.get('/canvas2', function(req, res) {
+
+        res.render('canvas', {
+            loggedIn: req.isAuthenticated(),
+            room: 2
+        });
+    });
+
+    app.get('/canvas3', function(req, res) {
+
+        res.render('canvas', {
+            loggedIn: req.isAuthenticated(),
+            room: 3
+        });
+    });
+
+    app.get('/canvas4', function(req, res) {
+
+        res.render('canvas', {
+            loggedIn: req.isAuthenticated(),
+            room: 4
         });
     });
 

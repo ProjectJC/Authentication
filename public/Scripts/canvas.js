@@ -3,7 +3,8 @@ context = canvas.getContext("2d");
 var lastI = -1;
 var checkpoints = [];
 var socket = io.connect("http://localhost:3000");
-
+console.log(roomname);
+socket.emit("addUser", roomname);
 var clickX = [];
 var clickY = [];
 var clickDrag = [];
