@@ -16,13 +16,14 @@ class Chat{
 		var output = document.createElement("div");
 		output.setAttribute("id", "output");
 		chat_window.appendChild(output);
+
 		var message = document.createElement("input");
 		message.setAttribute("id", "message_input");
 		message.setAttribute("type", "text");
 		message.setAttribute("placeholder", "Your guess");
 		var send = document.createElement("button");
 		send.setAttribute("id", "send");
-		send.innerHTML = "Send";
+		//send.innerHTML = "Send";
 
 		chat_panel.appendChild(chat_window);
 		chat_panel.appendChild(message);
@@ -38,6 +39,9 @@ class Chat{
 	}
 
 	displayMessage(data) {
+		if (data.message.length === 0) 
+			return;
+   	 	document.getElementById("message_input").value = "";
 		var output = document.getElementById("output");
 		output.innerHTML += "<p><strong>"+data.id+": </strong>" + data.message+"</p>";
 	}
