@@ -4,7 +4,7 @@
     display: block;
     margin-top: 2%;
     width: 100%;
-    height: 80%;
+    height: 85%;
 }
 
 
@@ -34,7 +34,7 @@
 
 #slide-bar-group {
     width:30%;
-    heigth: 15%;
+    height: 15%;
     display: inline-block;
 }
 
@@ -111,12 +111,6 @@ button:focus {outline:0;}
     }
 }
 
-@media screen and (max-width: 835px) {
-    #game {
-        heigth: 100%;
-        overflow-y: scroll;
-    }
-}
 
 @media screen and (max-width: 835px) {
     #slide-bar-group {
@@ -132,27 +126,36 @@ button:focus {outline:0;}
 }
 
 
-
 #color-buttons {
     display: inline-block;
-    width: 40%;
+    width: 25%;
+    height: 47%;
     margin-top: 2%;
 }
 
 #tool-buttons {
     display: inline-block;
     width: 30%;
-    align-items: center;
+    height: 35%;
 }
 
 button[id^="color"] {
     float: left;
-    border-radius: 3px;
-    border: 1px solid grey;
+    width: 20%;
+    height: 100%;
+    border: none;
+    margin: 2px;
+    box-shadow: 4px 8px 12px 4px rgba(0, 0, 0, 0.2), 2px 8px 23px 2px rgba(0, 0, 0, 0.19);    
+    background-repeat: no-repeat;
+    background-position: center; 
+    font-size: 16px;
 }
 
 button[id^="tool"] {
     float: left;
+    width: 25%;
+    height: 100%;
+    font-size: 16px;
     border-radius: 3px;
     border: 1px solid grey;
     background-color: #b1d0ff;
@@ -160,6 +163,7 @@ button[id^="tool"] {
 
 #color1 {
     background-color: #AB47BC;
+    /*background-image: url("../images/checker.png");*/
 }
 
 #color2 {
