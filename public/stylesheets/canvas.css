@@ -4,7 +4,7 @@
     display: block;
     margin-top: 2%;
     width: 100%;
-    height: 85%;
+    height: 74%;
 }
 
 
@@ -17,7 +17,7 @@
 
 #clear {
     float: right;
-    background-color: #ff3399;
+    background-color: #F56991;
     border: none;
     padding: 15px 32px;
     text-align: center;
@@ -25,21 +25,38 @@
     display: inline-block;
     font-size: 16px;
     cursor: pointer;
-    border-radius: 8px;
-    border:2px solid #000000;
-    margin: auto;
-    margin-top: 3%;
+    border-radius: 4px;
+    margin: 1%;
+    margin-right: -4px;
     display: block;
+    box-shadow: 6px 10px 10px 6px rgba(0, 0, 0, 0.2), 2px 8px 23px 2px rgba(0, 0, 0, 0.19);    
+}
+
+
+#undo {
+    float: right;
+    border: none;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    font-size: 16px;
+    cursor: pointer;
+    border-radius: 4px;
+    margin: 1%;
+    margin-right: 0px;
+    display: inline-block;
+    box-shadow: 6px 10px 10px 6px rgba(0, 0, 0, 0.2), 2px 8px 23px 2px rgba(0, 0, 0, 0.19);    
 }
 
 #slide-bar-group {
-    width:30%;
-    height: 15%;
+    width: 70%;
+    height: 10%;
+    margin-left: 3px;
     display: inline-block;
 }
 
 #slide-bar {
-    width: 70%;
+    width: 51%;
     float: left;
     border: none;
     margin: auto;
@@ -49,17 +66,19 @@
 
 #range {
     float: left;
-    padding: 8px 18px;
-    background-color: antiquewhite;
+    width: 28px;
+    padding: 6px 8px;
+    background-color: #ffe699;
     text-align: center;
     text-decoration: none;
     display: inline-block;
-    font-size: 16px;
-    border-radius: 8px;
-    border:2px solid darkslategrey;
+    font-size: 20px;
+    border-radius: 3px;
+    border:2px solid #ffffcc;
     margin: auto;
-    margin-top: 3%;
+    margin-top: 4%;
     display: inline-block;
+    box-shadow: 4px 8px 12px 4px rgba(0, 0, 0, 0.2), 2px 8px 23px 2px rgba(0, 0, 0, 0.19);    
 }
 
 
@@ -78,20 +97,7 @@ button:focus {outline:0;}
     overflow-y: auto;
    }
 }*/
-#undo {
-    float: right;
-    border: none;
-    padding: 15px 32px;
-    text-align: center;
-    text-decoration: none;
-    font-size: 16px;
-    cursor: pointer;
-    border-radius: 8px;
-    border:2px solid #000000;
-    margin: auto;
-    margin-top: 3%;
-    display: inline-block;
-}
+
 
 @media screen and (max-width: 835px) {
     #undo {
@@ -128,23 +134,23 @@ button:focus {outline:0;}
 
 #color-buttons {
     display: inline-block;
-    width: 30%;
-    height: 35%;
+    width: 35%;
+    height: 30%;
     margin-top: 1%;
+    margin-left: 3px;
 }
 
 #tool-buttons {
     display: inline-block;
     width: 30%;
-    height: 35%;
-    margin-left: 45px;
+    height: 30%;
     margin-top: 1%;
 }
 
 button[id^="color"] {
     float: center;
-    height: 55px;
-    width: 55px;
+    height: 50px;
+    width: 50px;
     border-radius: 3px;
     border: none;
     background-color: #000000;
@@ -155,14 +161,15 @@ button[id^="color"] {
 
 button[id^="tool"] {
     float: center;
-    height: 55px;
-    width: 55px;
+    height: 50px;
+    width: 50px;
     border-radius: 3px;
     border: none;
     background-color: #000000;
     box-shadow: 4px 8px 12px 4px rgba(0, 0, 0, 0.2), 2px 8px 23px 2px rgba(0, 0, 0, 0.19);    
     background-repeat: no-repeat;
     background-position: center; 
+    background-size: 90%;
     opacity: 0.8;
 }
 
@@ -172,19 +179,23 @@ button[id^="tool"] {
 }
 
 #color2 {
-    background-color: #659b41;
+    background-color: #1a75ff;
 }
 
 #color3 {
-    background-color: #FFC107;
+    background-color: #659b41;
 }
 
 #color4 {
+    background-color: #FFC107;
+}
+
+#color5 {
     background-color: #5D4037;
 }
 
 #tool-crayon {
-    background-image: url("../images/crayon.png");
+    background-image: url("../images/crayon-selected.png");
 }
 
 #tool-pen {
@@ -195,15 +206,16 @@ button[id^="tool"] {
     background-image: url("../images/eraser.png");
 }
 
-@media screen and (max-width: 382px) {
-    #color-buttons {
-        width: 30px;
+@media screen and (max-width: 1050px) {
+    button[id^="color"]  {
+        width: 40px !important;
+        height: 40px !important;
     }
 }
 
-@media screen and (max-width: 382px) {
-    #tool-buttons {
-        width: 30px;
-        margin-left: 10%;
+@media screen and (max-width: 1050px) {
+    button[id^="tool"] {
+        width: 40px;
+        height: 40px;
     }
 }

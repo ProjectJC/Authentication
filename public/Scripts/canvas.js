@@ -11,6 +11,7 @@ var clickDrag = [];
 var paint;
 var colorPurple = "#AB47BC";
 var colorGreen = "#659b41";
+var colorBlue = "#005ce6";
 var colorYellow = "#FFC107";
 var colorBrown = "#5D4037";
 
@@ -37,6 +38,7 @@ crayonTextureImage.onload = function() {
     redraw();
 };
 crayonTextureImage.src = "images/crayon-texture.png";//"images/Red.svg.png";  //"images/crayon-texture.png";
+
 document.getElementById("color1").addEventListener("click", function() {
     clearColorBoxes();
     document.getElementById("color1").style.backgroundImage = "url('../images/checker.png')";
@@ -46,25 +48,28 @@ document.getElementById("color1").addEventListener("click", function() {
 document.getElementById("color2").addEventListener("click", function() {
     clearColorBoxes();
     document.getElementById("color2").style.backgroundImage = "url('../images/checker.png')";
-    currentColor = colorGreen;
+    currentColor = colorBlue;
 });
+
 document.getElementById("color3").addEventListener("click", function() {
     clearColorBoxes();
     document.getElementById("color3").style.backgroundImage = "url('../images/checker.png')";
-    currentColor = colorYellow;
+    currentColor = colorGreen;
 });
 document.getElementById("color4").addEventListener("click", function() {
     clearColorBoxes();
     document.getElementById("color4").style.backgroundImage = "url('../images/checker.png')";
+    currentColor = colorYellow;
+});
+document.getElementById("color5").addEventListener("click", function() {
+    clearColorBoxes();
+    document.getElementById("color5").style.backgroundImage = "url('../images/checker.png')";
     currentColor = colorBrown;
 });
 
-
-
-// document.getElementById("slide-bar").addEventListener("change", function(){
-//     currentSize = parseInt(document.getElementById("range").innerHTML);
-//     console.log(currentSize);
-// });
+document.getElementById("slide-bar").addEventListener("change", function(){
+    currentSize = parseInt(document.getElementById("range").innerHTML);
+});
 
 document.getElementById("tool-crayon").addEventListener("click", function() {
     resetTools();
@@ -273,6 +278,7 @@ function clearColorBoxes() {
     document.getElementById("color2").style.backgroundImage = "none";
     document.getElementById("color3").style.backgroundImage = "none";
     document.getElementById("color4").style.backgroundImage = "none";
+    document.getElementById("color5").style.backgroundImage = "none";
 }
 
 function resetTools() {
