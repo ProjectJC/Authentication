@@ -3,12 +3,15 @@ context = canvas.getContext("2d");
 var lastI = -1;
 var checkpoints = [];
 var socket = io.connect("http://localhost:3000");
-console.log(roomname);
-socket.emit("addUser", roomname);
+
+let dict = {};
+
+
+
 var clickX = [];
 var clickY = [];
 var clickDrag = [];
-var paint;
+var paint = false;
 var colorPurple = "#AB47BC";
 var colorGreen = "#659b41";
 var colorYellow = "#FFC107";
@@ -27,8 +30,23 @@ var crayonTextureImage = new Image();
 
 var game = new Game();
 
+const info = {};
+info["clickX"] = clickX;
+info["clickY"] = clickY;
+info["clickDrag"] = clickDrag;
+info["clickColor"] = clickColor;
+info["clickSize"] = clickSize;
+info["clickTool"] = clickTool;
+info["checkpoints"] = checkpoints;
+info["lastI"] = lastI;
+info["paint"] = paint;
+info["currentColor"] = currentColor;
+info["currentSize"] = currentSize;
+info["currentTool"] = currentTool;
 game.displayChat();
 game.seatPlayers();
+
+socket.emit("addUser", roomname,info);
 
 var send_button = document.getElementById("send");  //?????????????????
 
@@ -90,6 +108,17 @@ socket.on('player-message', function(data){
     game.displayMessage(data);
 });
 
+socket.on('adduser', function(data,id,roomdata){
+    if(id === socket.id){
+        dict = roomdata;
+    }else{
+        dict[id] = data;
+    }
+
+   console.log(dict);
+});
+
+
 
 
 function mouseDown(e) {
@@ -107,17 +136,24 @@ function mouseDown(e) {
     });
 }
 
-socket.on('mouseDown', function(data) {
+socket.on('mouseDown', function(data,id) {
     console.log('down');
     var mouseX = data.x;
     var mouseY = data.y;
-    currentColor = data.color;
-    currentSize = data.size;
-    currentTool = data.tool;
-    paint = true;
-    checkpoints.push(lastI);
-    console.log(lastI);
-    addClick(mouseX, mouseY);
+
+    const inf = dict[id];
+    inf["checkpoints"].push(inf["lastI"]);
+    inf["currentColor"] = data.color;
+    inf["currentSize"] = data.size;
+    inf["currentTool"] = data.tool;
+    inf["paint"] = true;
+    // currentColor = data.color;
+    // currentSize = data.size;
+    // currentTool = data.tool;
+    // paint = true;
+    // checkpoints.push(lastI);
+    addClick(mouseX, mouseY,false, id);
+
     redraw();
 });
 
@@ -136,11 +172,12 @@ function mouseMove(e) {
 }
 
 
-socket.on('mouseMove', function(data){
+socket.on('mouseMove', function(data,id){
     console.log('MOUSE MOVE');
-
-    if(paint){
-        addClick(data.x, data.y, true);
+    const inf = dict[id];
+    if(inf["paint"] ){
+        console.log("adding");
+        addClick(data.x, data.y, true,id);
         redraw();
     }
 });
@@ -152,8 +189,9 @@ function mouseUp(e) {
     socket.emit('mouseUp');
 }
 
-socket.on('mouseUp', function(){
-    paint = false;
+socket.on('mouseUp', function(id){
+    const inf = dict[id];
+    inf["paint"] = false;
 });
 
 //---------Mouse leave
@@ -161,8 +199,12 @@ function mouseLeave(e) {
     socket.emit('mouseLeave');
 }
 
-socket.on('mouseLeave', function(){
-    paint=false;
+socket.on('mouseLeave', function(id){
+    console.log(dict);
+    console.log(id);
+    const inf = dict[id];
+    inf["paint"] = false;
+
 });
 
 function clearClicked(e) {
@@ -173,52 +215,64 @@ function undoClicked(e) {
     socket.emit('undo');
 }
 
-socket.on('clear', function(){
+socket.on('clear', function(id){
     console.log('CLEAR');
     context.clearRect(0, 0, context.canvas.width, context.canvas.height); // Clears the canvas
-    clickX = [];
-    clickY = [];
-    clickDrag = [];
-    clickColor = [];
-    clickSize = [];
-    clickTool = [];
+    const inf = dict[id];
+    inf["clickX"] = [];
+    inf["clickY"] = [];
+    inf["clickDrag"] = [];
+    inf["clickColor"] = [];
+    inf["clickSize"] = [];
+    inf["clickTool"] = [];
+    // clickX = [];
+    // clickY = [];
+    // clickDrag = [];
+    // clickColor = [];
+    // clickSize = [];
+    // clickTool = [];
+    redraw();
 });
 
-socket.on('undo', function(){
+socket.on('undo', function(id){
     console.log('UNDO');
+    const inf = dict[id];
     context.clearRect(0, 0, context.canvas.width, context.canvas.height); // Clears the canvas
-    if(checkpoints.length === 0 ){
+    if(inf["checkpoints"].length === 0 ){
+        redraw();
         return;
     }
-    lastI = checkpoints[checkpoints.length-1];
+    inf["lastI"] = inf["checkpoints"][inf["checkpoints"].length-1];
     // console.log(clickX.length);
     // console.log(lastI);
-    clickX = clickX.slice(0,lastI+1);
+    inf["clickX"] = inf["clickX"].slice(0,inf["lastI"]+1);
     // console.log(clickX.length);
-    clickY = clickY.slice(0,lastI+1);
-    clickDrag = clickDrag.slice(0,lastI+1);
-    clickColor = clickColor.slice(0, lastI+1);
-    clickSize = clickSize.slice(0, lastI+1);
-    clickTool = clickTool.slice(0, lastI+1);
-    checkpoints = checkpoints.slice(0,checkpoints.length-1);
-    if(clickX.length!== 0){
-        redraw();
-    }
+    inf["clickY"] = inf["clickY"].slice(0,inf["lastI"]+1);
+    inf["clickDrag"] = inf["clickDrag"].slice(0,inf["lastI"]+1);
+    inf["clickColor"] = inf["clickColor"].slice(0, inf["lastI"]+1);
+    inf["clickSize"] = inf["clickSize"].slice(0, inf["lastI"]+1);
+    inf["clickTool"] = inf["clickTool"].slice(0, inf["lastI"]+1);
+    inf["checkpoints"] = inf["checkpoints"].slice(0,inf["checkpoints"].length-1);
+    redraw();
 
 });
 
 
-function addClick(x, y, dragging) {
-    clickX.push(x);
-    clickY.push(y);
-    clickDrag.push(dragging);
-    if(currentTool === "eraser"){
-        clickColor.push("white");
+function addClick(x, y, dragging,id) {
+    const inf = dict[id];
+    inf["clickX"].push(x);
+    inf["clickY"].push(y);
+    inf["clickDrag"].push(dragging);
+    // clickX.push(x);
+    // clickY.push(y);
+    // clickDrag.push(dragging);
+    if(inf["currentTool"] === "eraser"){
+        inf["clickColor"].push("white");
     } else{
-        clickColor.push(currentColor);
+        inf["clickColor"].push(inf["currentColor"]);
     }
-    clickSize.push(currentSize);
-    clickTool.push(currentTool);
+    inf["clickSize"].push(inf["currentSize"]);
+    inf["clickTool"].push(inf["currentTool"]);
 }
 
 
@@ -229,25 +283,32 @@ function redraw(){
     context.lineJoin = "round";
     // context.lineWidth = 3;
 
-    for(var i=0; i < clickX.length; i++) {
-        context.beginPath();
-        if(clickDrag[i] && i){
-            // console.log("clickX: ", clickX[i], "; clickY: ", clickY[i]);
-            context.moveTo(clickX[i-1], clickY[i-1]);
-        }else{
-            context.moveTo((clickX[i]-1), clickY[i]);
+    for(var key in dict){
+        const info = dict[key];
+        console.log(info);
+        console.log("asfsaf");
+        for(var i=0; i < info["clickX"].length; i++) {
+            context.beginPath();
+            if(info["clickDrag"][i] && i){
+                // console.log("clickX: ", clickX[i], "; clickY: ", clickY[i]);
+                context.moveTo(info["clickX"][i-1], info["clickY"][i-1]);
+            }else{
+                context.moveTo((info["clickX"][i]-1), info["clickY"][i]);
+            }
+            context.lineTo(info["clickX"][i], info["clickY"][i]);
+            context.closePath();
+            context.strokeStyle = info["clickColor"][i];
+            context.lineWidth = info["clickSize"][i];
+            context.stroke();
+            if(info["clickTool"][i] === "crayon") {
+                context.globalAlpha = 0.4;
+                context.drawImage(crayonTextureImage, info["clickX"][i-1]-info["clickSize"][i]/2, info["clickY"][i-1]-info["clickSize"][i]/2,
+                    info["clickSize"][i], info["clickSize"][i]);
+            }
+            context.globalAlpha = 1;
         }
-        context.lineTo(clickX[i], clickY[i]);
-        context.closePath();
-        context.strokeStyle = clickColor[i];
-        context.lineWidth = clickSize[i];
-        context.stroke();
-        if(clickTool[i] == "crayon") {
-            context.globalAlpha = 0.4;
-            context.drawImage(crayonTextureImage, clickX[i-1]-clickSize[i]/2, clickY[i-1]-clickSize[i]/2, clickSize[i], clickSize[i]);
-        }
-        context.globalAlpha = 1;
+        info["lastI"] = info["clickX"].length -1;
     }
-    lastI = clickX.length -1;
+
 
 }

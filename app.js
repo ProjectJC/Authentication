@@ -61,43 +61,46 @@ var server = require('http').createServer(app);
 var io = require('socket.io').listen(server);
 server.listen(3000);
 connections = [];
+rooms = {room1:{},room2:{},room3:{},room4:{}};
 
 io.sockets.on('connection', function(socket) {
     connections.push(socket);
     console.log('%s sockets connected.', connections.length);
     console.log(socket.id);
 
-    socket.on('addUser',function(data){
+    socket.on('addUser',function(data,info){
        socket.room = ""+data;
        socket.join("" + data);
+       rooms["room" + data][socket.id] = info;
+       io.sockets.in(socket.room).emit('adduser',info,socket.id,rooms["room"+data]);
     });
     socket.on('mouseDown', function(data){
-        io.sockets.in(socket.room).emit('mouseDown', data)
+        io.sockets.in(socket.room).emit('mouseDown', data, socket.id)
     });
 
 
     socket.on('clear', function(data) {
         console.log("clear");
-        io.sockets.in(socket.room).emit('clear')
+        io.sockets.in(socket.room).emit('clear',socket.id)
     });
 
     socket.on('undo',function(data){
         console.log("hello");
-        io.sockets.in(socket.room).emit('undo');
+        io.sockets.in(socket.room).emit('undo',socket.id);
     });
 
 
     socket.on('mouseMove', function(data){
-        io.sockets.in(socket.room).emit('mouseMove', data)
+        io.sockets.in(socket.room).emit('mouseMove', data, socket.id)
     });
 
 
     socket.on('mouseUp', function(){
-        io.sockets.in(socket.room).emit('mouseUp')
+        io.sockets.in(socket.room).emit('mouseUp',socket.id)
     });
 
     socket.on('mouseLeave', function(){
-        io.sockets.in(socket.room).emit('mouseLeave')
+        io.sockets.in(socket.room).emit('mouseLeave',socket.id)
     });
 
 
