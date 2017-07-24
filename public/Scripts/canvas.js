@@ -61,27 +61,34 @@ document.getElementById("color4").addEventListener("click", function() {
 
 
 
-document.getElementById("slide-bar").addEventListener("change", function(){
-    currentSize = parseInt(document.getElementById("range").innerHTML);
-    console.log(currentSize);
-});
+// document.getElementById("slide-bar").addEventListener("change", function(){
+//     currentSize = parseInt(document.getElementById("range").innerHTML);
+//     console.log(currentSize);
+// });
 
 document.getElementById("tool-crayon").addEventListener("click", function() {
-   currentTool = "crayon";
+    resetTools();
+    document.getElementById("tool-crayon").style.backgroundImage = "url('../images/crayon-selected.png')";
+    currentTool = "crayon";
 });
 document.getElementById("tool-pen").addEventListener("click", function() {
+    resetTools();
+    document.getElementById("tool-pen").style.backgroundImage = "url('../images/pen-selected.png')";
     currentTool = "pen";
 });
 document.getElementById("tool-eraser").addEventListener("click", function() {
+    resetTools();
+    document.getElementById("tool-eraser").style.backgroundImage = "url('../images/eraser-selected.png')";
     currentTool = "eraser";
 });
+
+
 document.getElementById("canvas").addEventListener("mousedown", mouseDown);
 document.getElementById("canvas").addEventListener("mousemove", mouseMove);
 document.getElementById("canvas").addEventListener("mouseup", mouseUp);
 document.getElementById("canvas").addEventListener("mouseleave", mouseLeave);
 document.getElementById("clear").addEventListener("click", clearClicked);
 document.getElementById("undo").addEventListener("click", undoClicked);
-
 
 
 
@@ -266,4 +273,10 @@ function clearColorBoxes() {
     document.getElementById("color2").style.backgroundImage = "none";
     document.getElementById("color3").style.backgroundImage = "none";
     document.getElementById("color4").style.backgroundImage = "none";
+}
+
+function resetTools() {
+    document.getElementById("tool-eraser").style.backgroundImage = "url('../images/eraser.png')";
+    document.getElementById("tool-pen").style.backgroundImage = "url('../images/pen.png')";
+    document.getElementById("tool-crayon").style.backgroundImage = "url('../images/crayon.png')";
 }
