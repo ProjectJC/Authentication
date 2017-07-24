@@ -15,14 +15,14 @@
 }
 
 
-#clear {
-    float: right;
-    background-color: #ff3399; 
-    border: none;
+button {
+    /*float: right;*/
+    background-color: #FFCDD2;
+    /*border: none;*/
     padding: 15px 32px;
     text-align: center;
     text-decoration: none;
-    display: inline-block;
+    /*display: inline-block;*/
     font-size: 16px;
     cursor: pointer;
     border-radius: 8px;
@@ -31,6 +31,10 @@
     margin-top: 3%;
     display: block;
 }
+#clear {
+    float:right;
+}
+
 
 #slide-bar-group {
     width:30%;
@@ -59,8 +63,15 @@
     border:2px solid darkslategrey;
     margin: auto;
     margin-top: 3%;
-    display: inline-block;
+    /*display: inline-block;*/
 }
+
+@media screen and (max-width: 699px) {
+    #slide-bar-group{
+        width: 100%;
+    }
+}
+
 
 
 button:focus {outline:0;}
@@ -73,34 +84,35 @@ button:focus {outline:0;}
 }
 
 
-/*@media screen and (max-height: 500px) {
-   body {
-    overflow-y: auto;
-   }
-}*/
 #undo {
     float: right;
     border: none;
-    padding: 15px 32px;
-    text-align: center;
-    text-decoration: none;
-    font-size: 16px;
-    cursor: pointer;
-    border-radius: 8px;
+    /*padding: 15px 32px;*/
+    /*text-align: center;*/
+    /*text-decoration: none;*/
+    /*font-size: 16px;*/
+    /*cursor: pointer;*/
+    /*border-radius: 8px;*/
     border:2px solid #000000;
-    margin: auto;
-    margin-top: 3%;
-    display: inline-block;
+    /*margin: auto;*/
+    /*margin-top: 3%;*/
+    /*display: inline-block;*/
+}
+
+@media screen and (max-width: 699px) {
+    #undo {
+        padding: 7px 15px;
+    }
 }
 
 
-
 .dropbtn {
+    right:0;
     background-color: #EF5350;
     color: white;
     padding: 15px 32px;
     font-size: 16px;
-    display: block;
+    display: inline-block;
     border: none;
     border-radius: 8px;
     border:2px solid #000000;
@@ -116,12 +128,14 @@ button:focus {outline:0;}
 
 /* The container <div> - needed to position the dropdown content */
 .dropdown {
+    right:0;
     position: relative;
     display: inline-block;
 }
 
 
 .dropdown-content {
+    right:0;
     display: none;
     position: absolute;
     overflow: scroll;
@@ -154,24 +168,38 @@ button:focus {outline:0;}
 }
 
 
+@media screen and (max-width: 699px) {
+    .dropbtn {
+        padding: 7px 15px;
+    }
+}
+
 /* Change the background color of the dropdown button when the dropdown content is shown */
 /*.dropdown:hover .dropbtn {*/
     /*background-color: #EF5350;*/
 /*}*/
 
 #color1 {
+    border: none;
+    border-radius: 0;
     background-color: #AB47BC;
 }
 
 #color2 {
+    border: none;
+    border-radius: 0;
     background-color: #659b41;
 }
 
 #color3 {
+    border: none;
+    border-radius: 0;
     background-color: #FFC107;
 }
 
 #color4 {
+    border: none;
+    border-radius: 0;
     background-color: #5D4037;
 }
 
@@ -216,6 +244,8 @@ button:focus {outline:0;}
     overflow:auto;
     width: 100%;
     margin: 0;
+    border: 1px solid #000000;
+    border-radius: 0;
     text-decoration: none;
     padding: 3%;
     display: block;
@@ -223,4 +253,10 @@ button:focus {outline:0;}
 
 .dropdown-tools:hover .dropdown-tools-content {
     display: block;
+}
+
+@media screen and (max-width: 699px) {
+    .dropbtn-tools {
+        padding: 7px 15px;
+    }
 }
