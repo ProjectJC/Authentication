@@ -11,11 +11,20 @@
         <div id="canvasgroup">
 
             <canvas id="canvas" width='1200' height='600' ></canvas>
-            <div>
+            <div id="settings">
+                <div id = "slide-bar-group">
+                    <input id="slide-bar" type="range" min="3" max="21" value="3" step="3" onchange="showValue(this.value)" />
+                    <span id="range">3</span>
+                    <script type="text/javascript">
+                        function showValue(newValue){
+                            document.getElementById("range").innerHTML=newValue;
+                        }
+                    </script>
+                </div>
                 <button id="clear">Clear</button>
                 <button id="undo">Undo</button>
                 <div class="dropdown">
-                    <button class="dropbtn">Dropdown</button>
+                    <button class="dropbtn">Colors</button>
                     <div class="dropdown-content">
                         <button id="color1" >Purple</button>
                         <button id="color2" >Green</button>
@@ -23,6 +32,8 @@
                         <button id="color4" >Brown</button>
                     </div>
                 </div>
+
+
             </div>
         </div>
         <div id="table">

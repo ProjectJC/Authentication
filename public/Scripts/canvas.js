@@ -16,6 +16,10 @@ var colorBrown = "#5D4037";
 var currentColor = colorPurple;
 var clickColor = new Array();
 
+
+var clickSize = new Array();
+var currentSize = 3;
+
 var game = new Game();
 
 game.displayChat();
@@ -47,6 +51,11 @@ document.getElementById("color4").addEventListener("click", function() {
     currentColor = colorBrown;
 });
 
+document.getElementById("slide-bar").addEventListener("change", function(){
+    currentSize = parseInt(document.getElementById("range").innerHTML);
+    console.log(currentSize);
+})
+
 
 /*
  * თუ Chat და Canvas ობიექტებთან მხოლოდ Game-ს მეშვეობით უნდა გვქონდეს წვდომა, მაშინ ასე უნდა დავწეროთ ალბათ?
@@ -72,7 +81,8 @@ function mouseDown(e) {
     socket.emit('mouseDown', {
         x:mouseX,
         y:mouseY,
-        color: currentColor
+        color: currentColor,
+        size: currentSize
     });
 }
 
@@ -85,6 +95,7 @@ socket.on('mouseDown', function(data) {
     console.log(lastI);
     addClick(mouseX, mouseY);
     currentColor = data.color;
+    currentSize = data.size;
     redraw();
 });
 
@@ -137,7 +148,6 @@ function clearClicked(e) {
 }
 
 function undoClicked(e) {
-    // clickColor.pop();
     socket.emit('undo');
 }
 
@@ -148,6 +158,7 @@ socket.on('clear', function(){
     clickY = [];
     clickDrag = [];
     clickColor = new Array();
+    clickSize = new Array();
 });
 
 socket.on('undo', function(){
@@ -164,6 +175,7 @@ socket.on('undo', function(){
     clickY = clickY.slice(0,lastI+1);
     clickDrag = clickDrag.slice(0,lastI+1);
     clickColor = clickColor.slice(0, lastI+1);
+    clickSize = clickSize.slice(0, lastI+1);
     checkpoints = checkpoints.slice(0,checkpoints.length-1);
     if(clickX.length!== 0){
         redraw();
@@ -177,6 +189,7 @@ function addClick(x, y, dragging) {
     clickY.push(y);
     clickDrag.push(dragging);
     clickColor.push(currentColor);
+    clickSize.push(currentSize);
 }
 
 
@@ -185,7 +198,7 @@ function redraw(){
     //context.clearRect(0, 0, context.canvas.width, context.canvas.height); // Clears the canvas
     // context.strokeStyle = "#df4b26";
     context.lineJoin = "round";
-    context.lineWidth = 3;
+    // context.lineWidth = 3;
 
     for(var i=0; i < clickX.length; i++) {
         context.beginPath();
@@ -198,6 +211,7 @@ function redraw(){
         context.lineTo(clickX[i], clickY[i]);
         context.closePath();
         context.strokeStyle = clickColor[i];
+        context.lineWidth = clickSize[i];
         context.stroke();
     }
 
