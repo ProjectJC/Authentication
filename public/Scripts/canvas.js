@@ -20,21 +20,22 @@ var clickColor = new Array();
 var clickSize = new Array();
 var currentSize = 3;
 
+var clickTool = new Array();
+var currentTool = "crayon";
+var crayonTextureImage = new Image();
+
 var game = new Game();
 
 game.displayChat();
 game.seatPlayers();
 
-// var message = document.getElementById("message");//chat.getMessage();
 var send_button = document.getElementById("send");  //?????????????????
-// var output = document.getElementById("output");
 
-document.getElementById("canvas").addEventListener("mousedown", mouseDown);
-document.getElementById("canvas").addEventListener("mousemove", mouseMove);
-document.getElementById("canvas").addEventListener("mouseup", mouseUp);
-document.getElementById("canvas").addEventListener("mouseleave", mouseLeave);
-document.getElementById("clear").addEventListener("click", clearClicked);
-document.getElementById("undo").addEventListener("click", undoClicked);
+
+crayonTextureImage.onload = function() {
+    redraw();
+};
+crayonTextureImage.src = "images/crayon-texture.png";//"images/Red.svg.png";  //"images/crayon-texture.png";
 document.getElementById("color1").addEventListener("click", function() {
     currentColor = colorPurple;
 });
@@ -54,7 +55,26 @@ document.getElementById("color4").addEventListener("click", function() {
 document.getElementById("slide-bar").addEventListener("change", function(){
     currentSize = parseInt(document.getElementById("range").innerHTML);
     console.log(currentSize);
-})
+});
+
+document.getElementById("crayon").addEventListener("click", function() {
+   currentTool = "crayon";
+});
+document.getElementById("pen").addEventListener("click", function() {
+    currentTool = "pen";
+});
+document.getElementById("eraser").addEventListener("click", function() {
+    currentTool = "eraser";
+});
+document.getElementById("canvas").addEventListener("mousedown", mouseDown);
+document.getElementById("canvas").addEventListener("mousemove", mouseMove);
+document.getElementById("canvas").addEventListener("mouseup", mouseUp);
+document.getElementById("canvas").addEventListener("mouseleave", mouseLeave);
+document.getElementById("clear").addEventListener("click", clearClicked);
+document.getElementById("undo").addEventListener("click", undoClicked);
+
+
+
 
 
 /*
@@ -72,7 +92,6 @@ socket.on('player-message', function(data){
 
 
 function mouseDown(e) {
-
     const rect = canvas.getBoundingClientRect();
     const scaleX = canvas.width / rect.width;
     const scaleY = canvas.height / rect.height;
@@ -82,7 +101,8 @@ function mouseDown(e) {
         x:mouseX,
         y:mouseY,
         color: currentColor,
-        size: currentSize
+        size: currentSize,
+        tool: currentTool
     });
 }
 
@@ -90,12 +110,13 @@ socket.on('mouseDown', function(data) {
     console.log('down');
     var mouseX = data.x;
     var mouseY = data.y;
+    currentColor = data.color;
+    currentSize = data.size;
+    currentTool = data.tool;
     paint = true;
     checkpoints.push(lastI);
     console.log(lastI);
     addClick(mouseX, mouseY);
-    currentColor = data.color;
-    currentSize = data.size;
     redraw();
 });
 
@@ -157,8 +178,9 @@ socket.on('clear', function(){
     clickX = [];
     clickY = [];
     clickDrag = [];
-    clickColor = new Array();
-    clickSize = new Array();
+    clickColor = [];
+    clickSize = [];
+    clickTool = [];
 });
 
 socket.on('undo', function(){
@@ -176,6 +198,7 @@ socket.on('undo', function(){
     clickDrag = clickDrag.slice(0,lastI+1);
     clickColor = clickColor.slice(0, lastI+1);
     clickSize = clickSize.slice(0, lastI+1);
+    clickTool = clickTool.slice(0, lastI+1);
     checkpoints = checkpoints.slice(0,checkpoints.length-1);
     if(clickX.length!== 0){
         redraw();
@@ -188,8 +211,13 @@ function addClick(x, y, dragging) {
     clickX.push(x);
     clickY.push(y);
     clickDrag.push(dragging);
-    clickColor.push(currentColor);
+    if(currentTool === "eraser"){
+        clickColor.push("white");
+    } else{
+        clickColor.push(currentColor);
+    }
     clickSize.push(currentSize);
+    clickTool.push(currentTool);
 }
 
 
@@ -213,8 +241,12 @@ function redraw(){
         context.strokeStyle = clickColor[i];
         context.lineWidth = clickSize[i];
         context.stroke();
+        if(clickTool[i] == "crayon") {
+            context.globalAlpha = 0.4;
+            context.drawImage(crayonTextureImage, clickX[i-1]-clickSize[i]/2, clickY[i-1]-clickSize[i]/2, clickSize[i], clickSize[i]);
+        }
+        context.globalAlpha = 1;
     }
-
     lastI = clickX.length -1;
 
 }

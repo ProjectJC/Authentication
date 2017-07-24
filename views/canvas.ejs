@@ -13,7 +13,7 @@
             <canvas id="canvas" width='1200' height='600' ></canvas>
             <div id="settings">
                 <div id = "slide-bar-group">
-                    <input id="slide-bar" type="range" min="3" max="21" value="3" step="3" onchange="showValue(this.value)" />
+                    <input id="slide-bar" type="range" min="3" max="24" value="3" step="3" onchange="showValue(this.value)" />
                     <span id="range">3</span>
                     <script type="text/javascript">
                         function showValue(newValue){
@@ -30,6 +30,15 @@
                         <button id="color2" >Green</button>
                         <button id="color3" >Yellow</button>
                         <button id="color4" >Brown</button>
+                    </div>
+                </div>
+
+                <div class="dropdown-tools">
+                    <button class="dropbtn-tools">Tools</button>
+                    <div class="dropdown-tools-content">
+                        <button id="crayon">Crayon</button>
+                        <button id="pen">Pen</button>
+                        <button id="eraser">Eraser</button>
                     </div>
                 </div>
 
