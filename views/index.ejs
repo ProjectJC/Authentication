@@ -8,11 +8,29 @@
   <div class="topnav" id="myTopnav">
       <%if (loggedIn) { %>
     <a href="/logout">Log Out</a>
+
       <% }else{ %>
     <a href="/login">Log In</a>
     <a href="/signup">Sign Up</a>
 
       <% } %>
+  </div>
+  <div id = "lobby"> 
+   <p>Canvas</p>
+    <div id = "container">
+    <a href="/canvas">
+      <div id= "window"><span> Room 1</span></div>
+    </a>
+    <a href="/canvas">
+      <div id= "window"><span> Room 2</span></div>
+    </a>
+    <a href="/canvas">
+      <div id= "window"><span> Room 3</span></div>
+    </a>
+    <a href="/canvas">
+      <div id= "window"><span> Room 4</span></div>
+    </a>
+    </div>
   </div>
   </body>
 </html>
