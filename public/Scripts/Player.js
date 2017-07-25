@@ -3,6 +3,7 @@ class Player {
 	constructor(playerDto) {
 		this.id = playerDto.id;
 		this.name = playerDto.name;
+		this.score = 0;
 	}
 
 	drawPlayer() {
@@ -18,5 +19,9 @@ class Player {
 		player.appendChild(avatar);
 		player.appendChild(playerName);
 		playersPanel.appendChild(player);
+	}
+
+	addScore(newScore) {
+		this.score += newScore;
 	}
 }

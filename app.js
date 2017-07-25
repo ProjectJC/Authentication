@@ -74,6 +74,8 @@ io.sockets.on('connection', function(socket) {
        rooms["room" + data][socket.id] = info;
        io.sockets.in(socket.room).emit('adduser',info,socket.id,rooms["room"+data]);
     });
+
+
     socket.on('mouseDown', function(data){
         io.sockets.in(socket.room).emit('mouseDown', data, socket.id)
     });
@@ -109,6 +111,10 @@ io.sockets.on('connection', function(socket) {
     socket.on("player-message", function(data){
       console.log('message sent');
       io.sockets.in(socket.room).emit('player-message', data);
+    });
+
+    socket.on("word-guessed", function(data) {
+       io.sockets.in(socket.room).emit("word-guessed", data);
     });
 
     socket.on('disconnect', function (data) {

@@ -1,6 +1,19 @@
 class Game {
     constructor() {
         this.table = new Table();
+        this.word = "";
+        this.words = ["apple", "bee", "cake", "dog", "elephant", "face", "giraffe", "house", "ion"];
+    }
+
+    getRandomWord() {
+        //this.word = Random()/
+        // var rand = this.words[Math.floor(Math.random() * this.words.length)];
+        this.word = "bee";
+        return this.word;
+    }
+
+    checkWord(userGuess) {
+        return userGuess==this.word;
     }
 
     seatPlayers() {
