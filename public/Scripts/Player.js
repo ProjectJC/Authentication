@@ -3,6 +3,7 @@ class Player {
     constructor(playerDto) {
         this.id = playerDto.id;
         this.name = playerDto.name;
+        this.wordToDraw = playerDto.word;
     }
 
     drawPlayer() {

@@ -1,11 +1,18 @@
 class Game {
     constructor() {
         this.table = new Table();
+        this.words = ["apple", "bee", "carrot", "dog"];
     }
 
     seatPlayers() {
         //todo:
-        this.table.seatPlayers([{id: 3, name: "ana"}, {id:4, name:"mery"}, {id:5, name:"giorgi"},  {id:6, name:"giorgi"}, ]);
+        var rand1 = this.words[Math.floor(Math.random() * this.words.length)];
+        var rand2 = this.words[Math.floor(Math.random() * this.words.length)];
+        var rand3 = this.words[Math.floor(Math.random() * this.words.length)];
+        var rand4 = this.words[Math.floor(Math.random() * this.words.length)];
+
+
+        this.table.seatPlayers([{id: 3, name: "ana", word: rand1}, {id:4, name:"mery", word:rand2}, {id:5, name:"giorgi", word:rand3},  {id:6, name:"giorgi", word:rand4}, ]);
     }
 
     displayChat() {
@@ -30,6 +37,6 @@ class Game {
     }
 
     checkWord(word) {
-        return word == "bee";
+        //აქ როგორმე უნდა გავიგოთ ვის სიტყვას ვამოწმებთ
     }
 }
