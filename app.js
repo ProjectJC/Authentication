@@ -114,6 +114,8 @@ io.sockets.on('connection', function(socket) {
     socket.on('disconnect', function (data) {
         connections.splice(connections.indexOf(socket), 1);
         console.log('1 socket disconnected. %s left.', connections.length);
+        delete rooms["room" + socket.room][socket.id];
         socket.leave(socket.room);
+        io.sockets.in(socket.room).emit('disconnect',socket.id);
     });
 });

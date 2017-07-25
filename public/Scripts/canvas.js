@@ -138,6 +138,12 @@ socket.on('adduser', function(data,id,roomdata){
    console.log(dict);
 });
 
+socket.on('disconnect',function(id){
+   delete dict[id];
+   context.clearRect(0, 0, context.canvas.width, context.canvas.height); // Clears the canvas
+   redraw();
+});
+
 
 
 
@@ -302,6 +308,7 @@ function redraw(){
     // context.strokeStyle = "#df4b26";
     context.lineJoin = "round";
     // context.lineWidth = 3;
+    console.log("redrawing");
 
     for(var key in dict){
         const info = dict[key];
