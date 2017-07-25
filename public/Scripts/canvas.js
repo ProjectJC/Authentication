@@ -6,7 +6,7 @@ var socket = io.connect("http://localhost:3000");
 
 let dict = {};
 
-
+console.log(username);
 
 var clickX = [];
 var clickY = [];

@@ -8,6 +8,7 @@
 <link rel="shortcut icon" href="../images/favicon.ico" type="image/x-icon" />
 
 <% const roomname1 = (room) %>
+<% const username1 = (username) %>
 
 <body>
 
@@ -15,6 +16,8 @@
         <div id="canvasgroup">
             <input type="hidden" name="hiddenTemp1" id="hiddenTemp1" value="<%=roomname1%>">
             <script> const roomname = document.getElementById("hiddenTemp1").value</script>
+            <input type="hidden" name="hiddenTemp2" id="hiddenTemp2" value="<%=username1%>">
+            <script> const username = document.getElementById("hiddenTemp2").value</script>
 
         <canvas id="canvas" width='1200' height='600' ></canvas>
         <div id="settings">
