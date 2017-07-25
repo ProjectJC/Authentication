@@ -37,7 +37,8 @@ class Chat{
 	emitMessage(socket, message) {
 		socket.emit("player-message", {
 			id: socket.id,
-			message: message.value
+			message: message.value,
+			score: 10
 		});
 	}
 
@@ -46,7 +47,7 @@ class Chat{
 			return;
    	 	document.getElementById("message_input").value = "";
 		var output = document.getElementById("output");
-		output.innerHTML += "<p><strong>"+data.id+": </strong>" + data.message+"</p>";
+		output.innerHTML += "<p><strong>"+data.id+": </strong>" + data.message+ ";  total score "+data.score+ "</p>";
 	}
 
 

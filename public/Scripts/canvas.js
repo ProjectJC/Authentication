@@ -125,6 +125,11 @@ send_button.addEventListener('click', function(){
 });
 
 socket.on('player-message', function(data){
+    if(game.checkWord(data.message) == true) {
+        alert("guessed");
+        socket.emit("clear");
+        //game.increaseScore(player)
+    }
     game.displayMessage(data);
 });
 

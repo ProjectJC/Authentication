@@ -28,4 +28,8 @@ class Game {
         var self = this;
         self.table.displayMessage(data);
     }
+
+    checkWord(word) {
+        return word == "bee";
+    }
 }
