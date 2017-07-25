@@ -1,6 +1,6 @@
 #game-chat{
     width: 90%;
-    height: 50.5%;
+    height: 57%;
     margin-left: 10%;
     margin-top: 16%;
 }
@@ -66,5 +66,25 @@ input{
     padding: 7px 15px;
    }
 }
+
+@media screen and (max-width: 360px) {
+    #table {
+        width: 50%;
+    }
+}
+
+@media screen and (max-width: 360px) {
+    #canvasgroup {
+        width: 50%;
+    }
+}
+
+/*@media screen and (max-width: 360px) {*/
+    /*#message-input {*/
+        /*width: 50%;*/
+        /*font-size: 10px;*/
+        /*line-height:15px;*/
+    /*}*/
+/*}*/
 
 input:focus {outline:0;}

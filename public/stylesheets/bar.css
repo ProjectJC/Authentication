@@ -92,6 +92,11 @@ span {
     text-align: center;
 }
 
+#canvas_text {
+    font-size: 120px;
+    margin-top: 6%;
+}
+
 @media screen and (max-width: 1400px) {
    p {
        font-size: 70px;
