@@ -1,7 +1,7 @@
 class Game {
     constructor() {
         this.table = new Table();
-        this.words = ["apple", "bee", "carrot", "dog"];
+        this.words = ["apple", "bee", "carrot", "dog", "flower", "vampire", "mermaid", "tornado"];
     }
 
     seatPlayers() {

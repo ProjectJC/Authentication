@@ -20,4 +20,9 @@ class Player {
         player.appendChild(playerName);
         playersPanel.appendChild(player);
     }
+
+
+    setWordToDraw(word) {
+    	this.wordToDraw = word;
+	}
 }
