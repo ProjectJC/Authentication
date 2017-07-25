@@ -36,9 +36,9 @@ require('./routes/routes.js')(app, passport);
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use(function(req, res, next) {
-  var err = new Error('Not Found');
-  err.status = 404;
-  next(err);
+    var err = new Error('Not Found');
+    err.status = 404;
+    next(err);
 });
 
 app.use(function (req, res, next) {
@@ -47,11 +47,11 @@ app.use(function (req, res, next) {
 });
 
 app.use(function(err, req, res, next) {
-  res.locals.message = err.message;
-  res.locals.error = req.app.get('env') === 'development' ? err : {};
+    res.locals.message = err.message;
+    res.locals.error = req.app.get('env') === 'development' ? err : {};
 
-  res.status(err.status || 500);
-  res.render('error');
+    res.status(err.status || 500);
+    res.render('error');
 });
 
 module.exports = app;
@@ -69,13 +69,11 @@ io.sockets.on('connection', function(socket) {
     console.log(socket.id);
 
     socket.on('addUser',function(data,info){
-       socket.room = ""+data;
-       socket.join("" + data);
-       rooms["room" + data][socket.id] = info;
-       io.sockets.in(socket.room).emit('adduser',info,socket.id,rooms["room"+data]);
+        socket.room = ""+data;
+        socket.join("" + data);
+        rooms["room" + data][socket.id] = info;
+        io.sockets.in(socket.room).emit('adduser',info,socket.id,rooms["room"+data]);
     });
-
-
     socket.on('mouseDown', function(data){
         io.sockets.in(socket.room).emit('mouseDown', data, socket.id)
     });
@@ -109,12 +107,8 @@ io.sockets.on('connection', function(socket) {
 
 
     socket.on("player-message", function(data){
-      console.log('message sent');
-      io.sockets.in(socket.room).emit('player-message', data);
-    });
-
-    socket.on("word-guessed", function(data) {
-       io.sockets.in(socket.room).emit("word-guessed", data);
+        console.log('message sent');
+        io.sockets.in(socket.room).emit('player-message', data);
     });
 
     socket.on('disconnect', function (data) {

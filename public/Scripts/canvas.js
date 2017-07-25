@@ -44,7 +44,6 @@ info["paint"] = paint;
 info["currentColor"] = currentColor;
 info["currentSize"] = currentSize;
 info["currentTool"] = currentTool;
-info["word"] = game.getRandomWord();
 game.displayChat();
 game.seatPlayers();
 
@@ -56,18 +55,20 @@ var send_button = document.getElementById("send");  //?????????????????
 crayonTextureImage.onload = function() {
     redraw();
 };
-crayonTextureImage.src = "images/crayon-texture.png";
+crayonTextureImage.src = "images/crayon-texture.png";//"images/Red.svg.png";  //"images/crayon-texture.png";
 
 document.getElementById("color1").addEventListener("click", function() {
     clearColorBoxes();
     document.getElementById("color1").style.backgroundImage = "url('../images/checker.png')";
     currentColor = colorPurple;
 });
+
 document.getElementById("color2").addEventListener("click", function() {
     clearColorBoxes();
     document.getElementById("color2").style.backgroundImage = "url('../images/checker.png')";
     currentColor = colorBlue;
 });
+
 document.getElementById("color3").addEventListener("click", function() {
     clearColorBoxes();
     document.getElementById("color3").style.backgroundImage = "url('../images/checker.png')";
@@ -104,12 +105,14 @@ document.getElementById("tool-eraser").addEventListener("click", function() {
     currentTool = "eraser";
 });
 
+
 document.getElementById("canvas").addEventListener("mousedown", mouseDown);
 document.getElementById("canvas").addEventListener("mousemove", mouseMove);
 document.getElementById("canvas").addEventListener("mouseup", mouseUp);
 document.getElementById("canvas").addEventListener("mouseleave", mouseLeave);
 document.getElementById("clear").addEventListener("click", clearClicked);
 document.getElementById("undo").addEventListener("click", undoClicked);
+
 
 
 
@@ -123,25 +126,7 @@ send_button.addEventListener('click', function(){
 
 socket.on('player-message', function(data){
     game.displayMessage(data);
-    if(game.checkWord(data.message) == true) {
-        alert("correct");
-        socket.emit("word-guessed", {
-            winningPlayer: socket.id,
-            word: info["word"]
-        })
-    }
-
 });
-
-
-socket.on("word-guessed", function(data) {
-    if(data.winningPlayer !== socket.id) {
-        alert(data.winningPlayer + " guessed the word "+data.word);
-    }
-    setTimeout(1000);
-    socket.emit("clear");
-})
-
 
 socket.on('adduser', function(data,id,roomdata){
     if(id === socket.id){
@@ -150,13 +135,13 @@ socket.on('adduser', function(data,id,roomdata){
         dict[id] = data;
     }
 
-   console.log(dict);
+    console.log(dict);
 });
 
 socket.on('disconnect',function(id){
-   delete dict[id];
-   context.clearRect(0, 0, context.canvas.width, context.canvas.height); // Clears the canvas
-   redraw();
+    delete dict[id];
+    context.clearRect(0, 0, context.canvas.width, context.canvas.height); // Clears the canvas
+    redraw();
 });
 
 
