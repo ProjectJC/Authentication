@@ -19,6 +19,10 @@ class Game {
         this.table.displayChat();
     }
 
+    getRandomWord(){
+        return this.words[Math.floor(Math.random() * this.words.length)];
+
+    }
     displayCanvas() {
         this.table.displayCanvas();
     }

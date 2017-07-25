@@ -30,7 +30,7 @@ var currentTool = "crayon";
 var crayonTextureImage = new Image();
 
 var game = new Game();
-
+let word= game.getRandomWord();
 const info = {};
 info["clickX"] = clickX;
 info["clickY"] = clickY;
@@ -47,7 +47,7 @@ info["currentTool"] = currentTool;
 game.displayChat();
 game.seatPlayers();
 
-socket.emit("addUser", roomname,info);
+socket.emit("addUser", roomname,info,word);
 
 var send_button = document.getElementById("send");  //?????????????????
 
@@ -125,12 +125,33 @@ send_button.addEventListener('click', function(){
 });
 
 socket.on('player-message', function(data){
-    if(game.checkWord(data.message) == true) {
-        alert("guessed");
-        socket.emit("clear");
-        //game.increaseScore(player)
-    }
-    game.displayMessage(data);
+    // if(game.checkWord(data.message) == true) {
+    //     alert("guessed");
+    //     socket.emit("clear");
+    //     //game.increaseScore(player)
+    // }
+    game.displayMessage({id:username,message:data.message,score:data.score});
+});
+
+socket.on('word-message', function(data){
+    console.log("in");
+    // if(game.checkWord(data.message) == true) {
+    //     alert("guessed");
+    //     socket.emit("clear");
+    //     //game.increaseScore(player)
+    // }
+    game.displayMessage({id:"SERVER",message:"Your word is: " + data,score: 0});
+});
+
+socket.on('guess-message', function(data){
+    game.displayMessage({id:"SERVER",message:"CORRECT GUESS" ,score: data.score});
+
+});
+
+socket.on('newWord', function(){
+    console.log(socket.id);
+    let newWord = game.getRandomWord();
+    socket.emit('new-word',newWord);
 });
 
 socket.on('adduser', function(data,id,roomdata){

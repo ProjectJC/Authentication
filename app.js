@@ -62,18 +62,25 @@ var io = require('socket.io').listen(server);
 server.listen(3000);
 connections = [];
 rooms = {room1:{},room2:{},room3:{},room4:{}};
+words = {words1:{},words2:{},words3:{},words4:{}};
+scores = {scores1:{},scores2:{},scores3:{},scores4:{}};
 
 io.sockets.on('connection', function(socket) {
     connections.push(socket);
     console.log('%s sockets connected.', connections.length);
     console.log(socket.id);
 
-    socket.on('addUser',function(data,info){
+
+    socket.on('addUser',function(data,info,word){
         socket.room = ""+data;
         socket.join("" + data);
         rooms["room" + data][socket.id] = info;
+        words["words" + data][socket.id] = word;
+        scores["scores" + data][socket.id] = 0;
+        socket.emit('word-message', word);
         io.sockets.in(socket.room).emit('adduser',info,socket.id,rooms["room"+data]);
     });
+
     socket.on('mouseDown', function(data){
 
         const mouseX = data.x;
@@ -174,12 +181,26 @@ io.sockets.on('connection', function(socket) {
         io.sockets.in(socket.room).emit('mouseLeave',rooms["room" + socket.room],socket.id)
     });
 
+    socket.on('new-word', function(newWord){
+        words["words" + socket.room][socket.id] = newWord;
+        scores["scores" + socket.room][socket.id] = 0;
+        socket.emit('word-message', newWord);
+    });
+
 
 
 
     socket.on("player-message", function(data){
         console.log('message sent');
-        io.sockets.in(socket.room).emit('player-message', data);
+        const mess = data.message;
+        for(let socid in words["words" + socket.room]){
+            if(mess === words["words" + socket.room][socid] && socid !== socket.id){
+                scores["scores" + socket.room][socket.id] = scores["scores" + socket.room][socket.id] +1;
+                io.sockets.in(socket.room).emit('guess-message',{id:"SERVER",message:"Correct Guess", score: scores["scores" + socket.room][socket.id]})
+                io.to(socid).emit("newWord");
+            }
+        }
+        io.sockets.in(socket.room).emit('player-message', {id:socket.id,message:data.message,score:scores["scores" + socket.room][socket.id]});
     });
 
     socket.on('disconnect', function (data) {
