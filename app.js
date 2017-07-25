@@ -75,32 +75,103 @@ io.sockets.on('connection', function(socket) {
        io.sockets.in(socket.room).emit('adduser',info,socket.id,rooms["room"+data]);
     });
     socket.on('mouseDown', function(data){
-        io.sockets.in(socket.room).emit('mouseDown', data, socket.id)
+
+        const mouseX = data.x;
+        const mouseY = data.y;
+
+        const inf = rooms["room" + socket.room][socket.id];
+        inf["checkpoints"].push(inf["lastI"]);
+        inf["currentColor"] = data.color;
+        inf["currentSize"] = data.size;
+        inf["currentTool"] = data.tool;
+        inf["paint"] = true;
+        // currentColor = data.color;
+        // currentSize = data.size;
+        // currentTool = data.tool;
+        // paint = true;
+        // checkpoints.push(lastI);
+        addClick(mouseX, mouseY,false, inf);
+
+        io.sockets.in(socket.room).emit('mouseDown', rooms["room" + socket.room], socket.id)
     });
+
+    socket.on('addLastI', function(lastI){
+        const inf = rooms["room" + socket.room][socket.id];
+        inf["lastI"] = lastI;
+    });
+
+    function addClick(x, y, dragging,inf) {
+        // const inf = dict[id];
+        inf["clickX"].push(x);
+        inf["clickY"].push(y);
+        inf["clickDrag"].push(dragging);
+        // clickX.push(x);
+        // clickY.push(y);
+        // clickDrag.push(dragging);
+        if(inf["currentTool"] === "eraser"){
+            inf["clickColor"].push("white");
+        } else{
+            inf["clickColor"].push(inf["currentColor"]);
+        }
+        inf["clickSize"].push(inf["currentSize"]);
+        inf["clickTool"].push(inf["currentTool"]);
+    }
 
 
     socket.on('clear', function(data) {
         console.log("clear");
-        io.sockets.in(socket.room).emit('clear',socket.id)
+        const inf = rooms["room" + socket.room][socket.id];
+        inf["clickX"] = [];
+        inf["clickY"] = [];
+        inf["clickDrag"] = [];
+        inf["clickColor"] = [];
+        inf["clickSize"] = [];
+        inf["clickTool"] = [];
+        io.sockets.in(socket.room).emit('clear',rooms["room" + socket.room],socket.id)
     });
 
     socket.on('undo',function(data){
-        console.log("hello");
-        io.sockets.in(socket.room).emit('undo',socket.id);
+        const inf = rooms["room" + socket.room][socket.id];
+        if(inf["checkpoints"].length === 0 ){
+            io.sockets.in(socket.room).emit('undo',rooms["room" + socket.room],socket.id);
+            return;
+        }
+        inf["lastI"] = inf["checkpoints"][inf["checkpoints"].length-1];
+        // console.log(clickX.length);
+        // console.log(lastI);
+        inf["clickX"] = inf["clickX"].slice(0,inf["lastI"]+1);
+        // console.log(clickX.length);
+        inf["clickY"] = inf["clickY"].slice(0,inf["lastI"]+1);
+        inf["clickDrag"] = inf["clickDrag"].slice(0,inf["lastI"]+1);
+        inf["clickColor"] = inf["clickColor"].slice(0, inf["lastI"]+1);
+        inf["clickSize"] = inf["clickSize"].slice(0, inf["lastI"]+1);
+        inf["clickTool"] = inf["clickTool"].slice(0, inf["lastI"]+1);
+        inf["checkpoints"] = inf["checkpoints"].slice(0,inf["checkpoints"].length-1);
+        io.sockets.in(socket.room).emit('undo',rooms["room" + socket.room],socket.id);
     });
 
 
     socket.on('mouseMove', function(data){
-        io.sockets.in(socket.room).emit('mouseMove', data, socket.id)
+        const inf = rooms["room" + socket.room][socket.id];
+        if(inf["paint"] ){
+            addClick(data.x, data.y, true,inf);
+            // redraw();
+        }
+        io.sockets.in(socket.room).emit('mouseMove',rooms["room" + socket.room], socket.id)
     });
 
 
     socket.on('mouseUp', function(){
-        io.sockets.in(socket.room).emit('mouseUp',socket.id)
+        const inf = rooms["room" + socket.room][socket.id];
+        inf["paint"] = false;
+        io.sockets.in(socket.room).emit('mouseUp',rooms["room" + socket.room],socket.id)
     });
 
     socket.on('mouseLeave', function(){
-        io.sockets.in(socket.room).emit('mouseLeave',socket.id)
+
+        const inf = rooms["room" + socket.room][socket.id];
+        inf["paint"] = false;
+        io.sockets.in(socket.room).emit('mouseLeave',rooms["room" + socket.room],socket.id)
     });
 
 
@@ -116,6 +187,6 @@ io.sockets.on('connection', function(socket) {
         console.log('1 socket disconnected. %s left.', connections.length);
         delete rooms["room" + socket.room][socket.id];
         socket.leave(socket.room);
-        io.sockets.in(socket.room).emit('disconnect',socket.id);
+        io.sockets.in(socket.room).emit('disconnect',rooms["room" + socket.room],socket.id);
     });
 });
