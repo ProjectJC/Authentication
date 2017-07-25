@@ -17,6 +17,8 @@ class Chat{
 		output.setAttribute("id", "output");
 		chat_window.appendChild(output);
 
+		var input_holder = document.createElement("div");
+		input_holder.setAttribute("id", "input_holder");
 		var message = document.createElement("input");
 		message.setAttribute("id", "message_input");
 		message.setAttribute("type", "text");
@@ -25,10 +27,11 @@ class Chat{
 		send.setAttribute("id", "send");
 		//send.innerHTML = "Send";
 
+		input_holder.appendChild(message);
+		input_holder.appendChild(send);
 		chat_panel.appendChild(chat_window);
-		chat_panel.appendChild(message);
-		chat_panel.appendChild(send);
-
+		chat_panel.appendChild(input_holder);
+		//chat_panel.appendChild(send);
 	}
 
 	emitMessage(socket, message) {
